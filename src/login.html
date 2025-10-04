@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sign in · TodoMaster</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- App styles (adjust or remove files you’re not using) -->
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <link rel="preload" as="image" href="../assets/images/logo.svg">
+
+  <meta name="description" content="Sign in to your TodoMaster account." />
+</head>
+<body class="tm-body tm-theme--light">
+  <noscript>
+    <div class="tm-noscript">JavaScript is required for the best experience.</div>
+  </noscript>
+
+  <main class="tm-auth">
+    <!-- Left: brand / illustration (hidden on small screens) -->
+    <aside class="tm-auth__brand" aria-hidden="true">
+      <div class="tm-auth__brand-inner">
+        <img src="../assets/images/logo.svg" alt="" class="tm-logo">
+        <h1 class="tm-appname">TodoMaster</h1>
+        <p class="tm-tagline">Organize tasks. Empower teams.</p>
+      </div>
+    </aside>
+
+    <!-- Right: sign-in card -->
+    <section class="tm-auth__panel" aria-labelledby="signin-heading">
+      <div class="tm-card tm-card--elevated tm-card--auth">
+        <header class="tm-card__header">
+          <img src="../assets/images/logo.svg" alt="" class="tm-logo tm-logo--small">
+          <h2 id="signin-heading" class="tm-card__title">Welcome back</h2>
+          <p class="tm-card__subtitle">Sign in to continue</p>
+        </header>
+
+        <form id="login-form" class="tm-form" method="post" action="/api/auth/login" novalidate>
+          <!-- Email -->
+          <div class="tm-field">
+            <label for="email" class="tm-label">Email address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="tm-input"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="you@company.com"
+              required
+            />
+            <p class="tm-field__hint" id="email-hint">Use your work email.</p>
+            <p class="tm-field__error" data-error-for="email" role="alert" hidden>
+              Please enter a valid email address.
+            </p>
+          </div>
+
+          <!-- Password -->
+          <div class="tm-field">
+            <label for="password" class="tm-label">Password</label>
+            <div class="tm-input-group">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                class="tm-input"
+                autocomplete="current-password"
+                minlength="8"
+                placeholder="••••••••"
+                required
+              />
+              <button type="button" class="tm-btn tm-btn--ghost tm-password-toggle" aria-label="Show password">
+                👁
+              </button>
+            </div>
+            <p class="tm-field__error" data-error-for="password" role="alert" hidden>
+              Password must be at least 8 characters.
+            </p>
+          </div>
+
+          <!-- Options -->
+          <div class="tm-form__row tm-form__row--between">
+            <label class="tm-checkbox">
+              <input type="checkbox" name="remember" value="1">
+              <span>Remember me</span>
+            </label>
+            <a class="tm-link" href="/forgot-password">Forgot password?</a>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="tm-btn tm-btn--primary tm-btn--block">
+            Sign in
+          </button>
+
+          <!-- Divider -->
+          <div class="tm-divider" role="separator" aria-label="or"></div>
+
+          <!-- Alt sign-in (optional) -->
+          <button type="button" class="tm-btn tm-btn--secondary tm-btn--block" id="signin-google">
+            Continue with Google
+          </button>
+        </form>
+
+        <footer class="tm-card__footer">
+          <p class="tm-muted">
+            New to TodoMaster?
+            <a class="tm-link" href="./signup.html">Create an account</a>
+          </p>
+        </footer>
+      </div>
+
+      <p class="tm-meta tm-meta--legal">
+        Protected by reCAPTCHA • <a class="tm-link" href="/privacy">Privacy</a> • <a class="tm-link" href="/terms">Terms</a>
+      </p>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../assets/js/utils/validators.js" defer></script>
+  <script src="../assets/js/auth.js" defer></script>
+
+  <!-- Minimal component styles (safe if your CSS isn't ready yet) -->
+  <style>
+    :root { --gap: 16px; --radius: 14px; --maxw: 440px; }
+    .tm-body { min-height: 100svh; display: grid; place-items: stretch; background: #f6f7f9; color: #1b1f23; }
+    .tm-auth { display: grid; grid-template-columns: 1fr; min-height: 100svh; }
+    .tm-auth__brand { display: none; background: radial-gradient(1200px 600px at -10% -10%, #eef2ff, transparent), #0f172a; color: #fff; }
+    .tm-auth__brand-inner { padding: 8vh 6vw; max-width: 560px; }
+    .tm-logo { width: 48px; height: 48px; }
+    .tm-logo--small { width: 36px; height: 36px; }
+    .tm-appname { margin: 12px 0 4px; font-weight: 700; }
+    .tm-tagline { opacity: .8; }
+    .tm-auth__panel { display: grid; place-items: center; padding: 6vh 4vw; }
+    .tm-card { width: min(100%, var(--maxw)); background: #fff; border-radius: var(--radius); box-shadow: 0 10px 30px rgba(2,6,23,.08); overflow: hidden; }
+    .tm-card--auth { padding: 28px; }
+    .tm-card__header { text-align: center; margin-bottom: 18px; }
+    .tm-card__title { margin: 10px 0 2px; font-size: 1.5rem; }
+    .tm-card__subtitle { margin: 0; color: #6b7280; }
+    .tm-form { display: grid; gap: var(--gap); }
+    .tm-field { display: grid; gap: 6px; }
+    .tm-label { font-weight: 600; }
+    .tm-input, .tm-btn, .tm-input-group { width: 100%; }
+    .tm-input { appearance: none; border: 1px solid #d1d5db; border-radius: 12px; padding: 12px 14px; font-size: 16px; background: #fff; transition: border-color .15s, box-shadow .15s; }
+    .tm-input:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,.2); }
+    .tm-input-group { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; }
+    .tm-btn { border: 0; border-radius: 12px; padding: 12px 14px; font-weight: 600; cursor: pointer; }
+    .tm-btn--primary { background: #4f46e5; color: #fff; }
+    .tm-btn--primary:hover { filter: brightness(1.05); }
+    .tm-btn--secondary { background: #111827; color: #fff; }
+    .tm-btn--ghost { background: transparent; border: 1px solid #d1d5db; color: #374151; }
+    .tm-btn--block { width: 100%; }
+    .tm-checkbox { display: inline-flex; align-items: center; gap: 8px; }
+    .tm-link { color: #4f46e5; text-decoration: none; }
+    .tm-link:hover { text-decoration: underline; }
+    .tm-form__row { display: flex; align-items: center; gap: 12px; }
+    .tm-form__row--between { justify-content: space-between; }
+    .tm-divider { margin: 14px 0; height: 1px; background: #e5e7eb; position: relative; }
+    .tm-divider[aria-label]::after { content: attr(aria-label); position: absolute; inset: -12px auto auto 50%; transform: translateX(-50%); background: #fff; padding: 0 8px; color: #6b7280; font-size: 12px; }
+    .tm-field__hint { margin: 0; color: #6b7280; font-size: 12px; }
+    .tm-field__error { margin: 0; color: #b91c1c; font-size: 13px; }
+    .tm-card__footer { margin-top: 16px; text-align: center; }
+    .tm-meta--legal { margin-top: 18px; text-align: center; color: #6b7280; font-size: 12px; }
+    .tm-noscript { padding: 12px; background: #fef3c7; color: #92400e; text-align: center; }
+    /* Responsive: show brand panel on >= 960px */
+    @media (min-width: 960px) {
+      .tm-auth { grid-template-columns: 1.05fr 1fr; }
+      .tm-auth__brand { display: block; }
+      .tm-auth__panel { padding: 8vh 6vw; }
+      .tm-card--auth { padding: 36px; }
+    }
+    /* Reduce motion for accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+
+  <!-- Tiny interaction script for show/hide password + client hints -->
+  <script>
+    (function () {
+      const toggle = document.querySelector('.tm-password-toggle');
+      const pwd = document.getElementById('password');
+      if (toggle && pwd) {
+        toggle.addEventListener('click', () => {
+          const t = pwd.getAttribute('type') === 'password' ? 'text' : 'password';
+          pwd.setAttribute('type', t);
+          toggle.setAttribute('aria-label', t === 'password' ? 'Show password' : 'Hide password');
+        });
+      }
+
+      // Basic client-side validation messages (non-blocking; server remains source of truth)
+      const form = document.getElementById('login-form');
+      form?.addEventListener('submit', (e) => {
+        let valid = true;
+        const email = document.getElementById('email');
+        const emailErr = document.querySelector('[data-error-for="email"]');
+        const pwdErr = document.querySelector('[data-error-for="password"]');
+
+        if (email && !email.checkValidity()) {
+          emailErr.hidden = false; valid = false;
+        } else if (emailErr) emailErr.hidden = true;
+
+        if (pwd && (pwd.value?.length < 8)) {
+          pwdErr.hidden = false; valid = false;
+        } else if (pwdErr) pwdErr.hidden = true;
+
+        if (!valid) e.preventDefault();
+      });
+    })();
+  </script>
+</body>
+</html>
